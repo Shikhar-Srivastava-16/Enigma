@@ -1,0 +1,6 @@
+20th December 2023: Enigma Machine Notes Entry 1
+Time: 0051 hrs IST
+    This is the first entry (of many, I am sure) concerning my writing a program to emulate the german-made Enigma Machine
+    This first entry is written before I start and before I make the initial commit. 
+    This entire project will be published on github and regularly updated. It will be written in C. 
+    Each following entry will be made whenever I add to the program. It will contain references to each of the relevant commitment messages. It will also explain the working of each of the parts and how they fit into Enigma's mechanisms.
