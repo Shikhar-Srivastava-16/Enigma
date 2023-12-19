@@ -17,7 +17,7 @@ void configPlugboard() {
     plugboardList[(int)change2 - 65] = change1;     
 }
 
-char implementPlugboard(char1) {
+char implementPlugboard(char char1) {
     return(plugboardList[(int)char1 - 65]);
 }
 
