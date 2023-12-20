@@ -148,5 +148,6 @@ char implementPlugboard(char char1) {
 
 
 int main() {
+    printf("new\n");
     return 0;
 }
