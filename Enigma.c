@@ -98,12 +98,6 @@ char rotor3[26][3] = {
     {'Z', 'P', 26}
 };
 
-//create mirroring here
-/*
-*temp
-ABCDEFGHIJKLM
-NUXYPTVQWZRSO
-*/
 char reflector[26][2] = {
     {'A', 'N'},
     {'B', 'U'},
