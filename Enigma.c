@@ -9,10 +9,10 @@ char plugboardList[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N',
 *pos is used to find the connection to the next rotor
 *then the corresponding output is picked up
 *the order of changes is thus: 
-*   rotor1(in) --> rotor1(out) --> rotor2(out)[based on same number] --> rotor3(out)[based on same number]
+*   rotor1(in) --> rotor1(out) --> rotor2(out)[based on same number] --> rotor3(out)[based on same number], then through reflector and same in reverse.
 */
 char rotor1[][] = {
-    {A, f, 1},
+    {A, F, 1},
     {B, p, 2},
     {C, q, 3},
     {D, j, 4},
@@ -59,7 +59,7 @@ char rotor2[][] = {
     {P, a, 16},
     {Q, q, 17},
     {R, l, 18},
-    {S, f, 19},
+    {S, F, 19},
     {T, d, 20},
     {U, s, 21},
     {V, h, 22},
@@ -86,7 +86,7 @@ char rotor3[][] = {
     {N, l, 14},
     {O, b, 15},
     {P, c, 16},
-    {Q, f, 17},
+    {Q, F, 17},
     {R, m, 18},
     {S, n, 19},
     {T, q, 20},
@@ -98,6 +98,34 @@ char rotor3[][] = {
     {Z, p, 26},
 }
 
+char reflector[][] = {
+    {A, g},
+    {B, t},
+    {C, z},
+    {D, p},
+    {E, k},
+    {F, x},
+    {G, w},
+    {H, d},
+    {I, j},
+    {J, r},
+    {K, q},
+    {L, y},
+    {M, s},
+    {N, v},
+    {O, b},
+    {P, l},
+    {Q, a},
+    {R, c},
+    {S, F},
+    {T, m},
+    {U, u},
+    {V, h},
+    {W, n},
+    {X, i},
+    {Y, o},
+    {Z, e},
+}
 
 void configPlugboard() {
     
