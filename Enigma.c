@@ -9,93 +9,94 @@ char plugboardList[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N',
 *pos is used to find the connection to the next rotor
 *then the corresponding output is picked up
 *the order of changes is thus: 
-*   rotor1(in) --> rotor1(out) --> rotor2(out)[based on same number] --> rotor3(out)[based on same number], then through reflector and same in reverse.
+*   rotor1(in) --> rotor1(out) --> rotor2(out) --> rotor3(out), then through reflector and same in reverse.
+    x   
 */
-char rotor1[26][3] = {
-    {'A', 'F', 1},
-    {'B', 'P', 2},
-    {'C', 'Q', 3},
-    {'D', 'J', 4},
-    {'E', 'H', 5},
-    {'F', 'Y', 6},
-    {'G', 'K', 7},
-    {'H', 'O', 8},
-    {'I', 'U', 9},
-    {'J', 'L', 10},
-    {'K', 'N', 11},
-    {'L', 'M', 12},
-    {'M', 'D', 13},
-    {'N', 'A', 14},
-    {'O', 'W', 15},
-    {'P', 'X', 16},
-    {'Q', 'G', 17},
-    {'R', 'S', 18},
-    {'S', 'Z', 19},
-    {'T', 'I', 20},
-    {'U', 'V', 21},
-    {'V', 'C', 22},
-    {'W', 'B', 23},
-    {'X', 'R', 24},
-    {'Y', 'T', 25},
-    {'Z', 'E', 26}
+char rotor1[26][2] = {
+    {'A', 'F'},
+    {'B', 'P'},
+    {'C', 'Q'},
+    {'D', 'J'},
+    {'E', 'H'},
+    {'F', 'Y'},
+    {'G', 'K'},
+    {'H', 'O'},
+    {'I', 'U'},
+    {'J', 'L'},
+    {'K', 'N'},
+    {'L', 'M'},
+    {'M', 'D'},
+    {'N', 'A'},
+    {'O', 'W'},
+    {'P', 'X'},
+    {'Q', 'G'},
+    {'R', 'S'},
+    {'S', 'Z'},
+    {'T', 'I'},
+    {'U', 'V'},
+    {'V', 'C'},
+    {'W', 'B'},
+    {'X', 'R'},
+    {'Y', 'T'},
+    {'Z', 'E'}
 };
 
 char rotor2[26][3] = {
-    {'A', 'Y', 1},
-    {'B', 'V', 2},
-    {'C', 'U', 3},
-    {'D', 'P', 4},
-    {'E', 'N', 5},
-    {'F', 'B', 6},
-    {'G', 'G', 7},
-    {'H', 'W', 8},
-    {'I', 'J', 9},
-    {'J', 'X', 10},
-    {'K', 'K', 11},
-    {'L', 'Z', 12},
-    {'M', 'R', 13},
-    {'N', 'I', 14},
-    {'O', 'O', 15},
-    {'P', 'A', 16},
-    {'Q', 'Q', 17},
-    {'R', 'L', 18},
-    {'S', 'F', 19},
-    {'T', 'D', 20},
-    {'U', 'S', 21},
-    {'V', 'H', 22},
-    {'W', 'M', 23},
-    {'X', 'T', 24},
-    {'Y', 'E', 25},
-    {'Z', 'C', 26}
+    {'A', 'Y'},
+    {'B', 'V'},
+    {'C', 'U'},
+    {'D', 'P'},
+    {'E', 'N'},
+    {'F', 'B'},
+    {'G', 'G'},
+    {'H', 'W'},
+    {'I', 'J'},
+    {'J', 'X'},
+    {'K', 'Z'},
+    {'L', 'K'},
+    {'M', 'R'},
+    {'N', 'I'},
+    {'O', 'A'},
+    {'P', 'O'},
+    {'Q', 'L'},
+    {'R', 'Q'},
+    {'S', 'F'},
+    {'T', 'D'},
+    {'U', 'S'},
+    {'V', 'H'},
+    {'W', 'M'},
+    {'X', 'T'},
+    {'Y', 'E'},
+    {'Z', 'C'}
 };
 
 char rotor3[26][3] = {
-    {'A', 'T', 1},
-    {'B', 'V', 2},
-    {'C', 'H', 3},
-    {'D', 'X', 4},
-    {'E', 'R', 5},
-    {'F', 'J', 6},
-    {'G', 'G', 7},
-    {'H', 'W', 8},
-    {'I', 'S', 9},
-    {'J', 'I', 10},
-    {'K', 'Y', 11},
-    {'L', 'K', 12},
-    {'M', 'A', 13},
-    {'N', 'L', 14},
-    {'O', 'B', 15},
-    {'P', 'C', 16},
-    {'Q', 'F', 17},
-    {'R', 'M', 18},
-    {'S', 'N', 19},
-    {'T', 'Q', 20},
-    {'U', 'D', 21},
-    {'V', 'U', 22},
-    {'W', 'O', 23},
-    {'X', 'Z', 24},
-    {'Y', 'E', 25},
-    {'Z', 'P', 26}
+    {'A', 'T'},
+    {'B', 'V'},
+    {'C', 'H'},
+    {'D', 'X'},
+    {'E', 'R'},
+    {'F', 'J'},
+    {'G', 'G'},
+    {'H', 'W'},
+    {'I', 'S'},
+    {'J', 'I'},
+    {'K', 'Y'},
+    {'L', 'K'},
+    {'M', 'A'},
+    {'N', 'L'},
+    {'O', 'B'},
+    {'P', 'C'},
+    {'Q', 'F'},
+    {'R', 'M'},
+    {'S', 'N'},
+    {'T', 'Q'},
+    {'U', 'D'},
+    {'V', 'U'},
+    {'W', 'O'},
+    {'X', 'Z'},
+    {'Y', 'E'},
+    {'Z', 'P'}
 };
 
 char reflector[26][2] = {
@@ -145,9 +146,33 @@ char implementPlugboard(char char1) {
     return(plugboardList[(int)char1 - 65]);
 }
 
+char implementRotaryMech(char char1) {
+    char charNew;
+    int incrementsToRotor1, incrementsToRotor2, incrementsToRotor3;
+    int position;
 
+    //rotor1
+
+    //rotor2
+    //rotor3
+    //reflector circuit
+    for (int i = 0; i < sizeof(reflector); i++) {
+        if (char1 == reflector[i][0]) {
+            char1 = reflector[i][1];
+            break;
+        }
+    }
+    //rotor3
+    //rotor2
+    //rotor1       
+        
+    
+    
+    
+}
 
 int main() {
     printf("new\n");
+
     return 0;
 }
