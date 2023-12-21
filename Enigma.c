@@ -152,7 +152,6 @@ char implementRotaryMech(char char1) {
     int position;
 
     //rotor1
-
     //rotor2
     //rotor3
     //reflector circuit
