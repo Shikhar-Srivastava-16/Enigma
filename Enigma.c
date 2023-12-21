@@ -128,6 +128,8 @@ char reflector[26][2] = {
     {'Z', 'J'}
 };
 
+int incrementsToRotor1 = 0, incrementsToRotor2 = 0, incrementsToRotor3 = 0;
+
 void configPlugboard() {
     
     //fully functioning
@@ -148,12 +150,37 @@ char implementPlugboard(char char1) {
 
 char implementRotaryMech(char char1) {
     char charNew;
-    int incrementsToRotor1, incrementsToRotor2, incrementsToRotor3;
+    int incrementsToRotor1 = 0, incrementsToRotor2 = 0, incrementsToRotor3 = 0;
     int position;
 
     //rotor1
+    for (int i = 0; i < sizeof(rotor1); i++) {
+        if (rotor1[i][0] == char1+incrementsToRotor1) {
+            charNew = rotor1[i][1];  
+        }
+    }
+    incrementsToRotor1++
+
     //rotor2
-    //rotor3
+    for (int i = 0; i < sizeof(rotor1); i++) {
+        if (rotor2[i][0] == charNew+incrementsToRotor2) {
+            charNew = rotor2[i][1];
+        } 
+    }
+    if (incrementsToRotor1 == 27) {
+        incrementsToRotor1 = 1;
+        incrementsToRotor2++
+    }   
+    //rotor3g  
+    for (int i = 0; i < sizeof(rotor1); i++) {
+        if (rotor3[i][0] == charNew+incrementsToRotor3) {
+            charNew = rotor2[i][1];
+        } 
+    }
+    if (incrementsToRotor2 == 27) {
+        incrementsToRotor2 = 1;
+        incrementsToRotor3++
+    }  
     //reflector circuit
     for (int i = 0; i < sizeof(reflector); i++) {
         if (char1 == reflector[i][0]) {
@@ -162,8 +189,23 @@ char implementRotaryMech(char char1) {
         }
     }
     //rotor3
+    for (int i = 0; i < sizeof(rotor1); i++) {
+        if (rotor3[i][0] == charNew+incrementsToRotor3) {
+            charNew = rotor2[i][1];
+        } 
+    }
     //rotor2
-    //rotor1       
+    for (int i = 0; i < sizeof(rotor1); i++) {
+        if (rotor2[i][0] == charNew+incrementsToRotor2) {
+            charNew = rotor2[i][1];
+        } 
+    }
+    //rotor1
+    for (int i = 0; i < sizeof(rotor1); i++) {
+        if (rotor1[i][0] == char1+incrementsToRotor1) {
+            charNew = rotor1[i][1];  
+        }
+    }       
         
     
     
