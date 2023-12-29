@@ -148,6 +148,24 @@ char implementPlugboard(char char1) {
     return(plugboardList[(int)char1 - 65]);
 }
 
+char implementRotorForward(char rotor[26][2], int increment, char charToChange) {
+    for (int i = 0; i < sizeof(rotor); i++) {
+        if (rotor[i][0] == charToChange) {
+            charToChange = rotor1[i + increment][1];
+        }
+    }
+    return charToChange;
+}  
+
+char implementRotorBackward(char rotor[26][2], int increment, char charToChange) {
+    for (int i = 0; i < sizeof(rotor); i++) {
+        if (rotor[i][1] == charToChange) {
+            charToChange = rotor1[i - increment][0];
+        }
+    }
+    return charToChange;
+}  
+
 char implementRotaryMech(char char1) {
     char charNew;
     int incrementsToRotor1 = 0, incrementsToRotor2 = 0, incrementsToRotor3 = 0;
@@ -159,7 +177,7 @@ char implementRotaryMech(char char1) {
             charNew = rotor1[i][1];  
         }
     }
-    incrementsToRotor1++
+    incrementsToRotor1++;
 
     //rotor2
     for (int i = 0; i < sizeof(rotor1); i++) {
@@ -169,7 +187,7 @@ char implementRotaryMech(char char1) {
     }
     if (incrementsToRotor1 == 27) {
         incrementsToRotor1 = 1;
-        incrementsToRotor2++
+        incrementsToRotor2++;
     }   
     //rotor3g  
     for (int i = 0; i < sizeof(rotor1); i++) {
@@ -179,7 +197,7 @@ char implementRotaryMech(char char1) {
     }
     if (incrementsToRotor2 == 27) {
         incrementsToRotor2 = 1;
-        incrementsToRotor3++
+        incrementsToRotor3++;
     }  
     //reflector circuit
     for (int i = 0; i < sizeof(reflector); i++) {
@@ -213,7 +231,7 @@ char implementRotaryMech(char char1) {
 }
 
 int main() {
-    printf("new\n");
+    printf("new with implementRotor\n");
 
     return 0;
 }
