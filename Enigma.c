@@ -130,8 +130,14 @@ char reflector[26][2] = {
 
 int incrementsToRotor1 = 0, incrementsToRotor2 = 0, incrementsToRotor3 = 0;
 
+
 void configPlugboard() {
     
+    /*
+     * takes command line input and changes the global plugboardList array
+     * switches the desired letters' positions in plugboardList array
+    */
+
     //fully functioning
     char change1;
     char change2;
@@ -145,8 +151,14 @@ void configPlugboard() {
 }
 
 char implementPlugboard(char char1) {
+    /*
+     * ciphers 'char1' and returns the value.
+     * uses plugboardList as 26-letter cipher.
+    */
+
     return(plugboardList[(int)char1 - 65]);
 }
+//----working boundary----
 
 char implementRotorForward(char rotor[26][2], int increment, char charToChange) {
     for (int i = 0; i < sizeof(rotor); i++) {
@@ -158,6 +170,7 @@ char implementRotorForward(char rotor[26][2], int increment, char charToChange) 
 }  
 
 char implementRotorBackward(char rotor[26][2], int increment, char charToChange) {
+
     for (int i = 0; i < sizeof(rotor); i++) {
         if (rotor[i][1] == charToChange) {
             charToChange = rotor1[i - increment][0];
@@ -166,72 +179,8 @@ char implementRotorBackward(char rotor[26][2], int increment, char charToChange)
     return charToChange;
 }  
 
-char implementRotaryMech(char char1) {
-    char charNew;
-    int incrementsToRotor1 = 0, incrementsToRotor2 = 0, incrementsToRotor3 = 0;
-    int position;
-
-    //rotor1
-    for (int i = 0; i < sizeof(rotor1); i++) {
-        if (rotor1[i][0] == char1+incrementsToRotor1) {
-            charNew = rotor1[i][1];  
-        }
-    }
-    incrementsToRotor1++;
-
-    //rotor2
-    for (int i = 0; i < sizeof(rotor1); i++) {
-        if (rotor2[i][0] == charNew+incrementsToRotor2) {
-            charNew = rotor2[i][1];
-        } 
-    }
-    if (incrementsToRotor1 == 27) {
-        incrementsToRotor1 = 1;
-        incrementsToRotor2++;
-    }   
-    //rotor3g  
-    for (int i = 0; i < sizeof(rotor1); i++) {
-        if (rotor3[i][0] == charNew+incrementsToRotor3) {
-            charNew = rotor2[i][1];
-        } 
-    }
-    if (incrementsToRotor2 == 27) {
-        incrementsToRotor2 = 1;
-        incrementsToRotor3++;
-    }  
-    //reflector circuit
-    for (int i = 0; i < sizeof(reflector); i++) {
-        if (char1 == reflector[i][0]) {
-            char1 = reflector[i][1];
-            break;
-        }
-    }
-    //rotor3
-    for (int i = 0; i < sizeof(rotor1); i++) {
-        if (rotor3[i][0] == charNew+incrementsToRotor3) {
-            charNew = rotor2[i][1];
-        } 
-    }
-    //rotor2
-    for (int i = 0; i < sizeof(rotor1); i++) {
-        if (rotor2[i][0] == charNew+incrementsToRotor2) {
-            charNew = rotor2[i][1];
-        } 
-    }
-    //rotor1
-    for (int i = 0; i < sizeof(rotor1); i++) {
-        if (rotor1[i][0] == char1+incrementsToRotor1) {
-            charNew = rotor1[i][1];  
-        }
-    }       
-        
-    
-    
-    
-}
-
 int main() {
-    printf("new with implementRotor\n");
+    printf("new with implementRotor functions\n");
 
     return 0;
 }
