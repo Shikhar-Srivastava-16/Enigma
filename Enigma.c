@@ -107,7 +107,9 @@ char reflector[13][2] = {
     {'M', 'O'}
 };
 
-int incrementsToRotor1 = 0, incrementsToRotor2 = 0, incrementsToRotor3 = 0;
+int incrementsToRotor1 = 0;
+int incrementsToRotor2 = 0;
+int incrementsToRotor3 = 0;
 
 void configPlugboard() {
     
@@ -137,57 +139,57 @@ char implementPlugboard(char char1) {
     return(plugboardList[(int)char1 - 65]);
 }
 
-//----working boundary----
-
 char implementRotorForward(char rotor[26][2], int increment, char charToChange) {
     
     for (int i = 0; i < sizeof(rotor); i++) {
         if (rotor[i][0] == charToChange) {
-            charToChange = rotor1[i + increment][1];
+            char charNew = rotor[i + increment][1];
+            return charNew;
         }
-    }
-    return charToChange;
+    }   
 }  
 
 char implementRotorBackward(char rotor[26][2], int increment, char charToChange) {
 
     for (int i = 0; i < sizeof(rotor); i++) {
-        if (rotor[i][1] == charToChange) {
-            charToChange = rotor1[i - increment][0];
+        if (rotor[i][1] == charToChange) {  
+            char charNew = rotor[i + increment][1];
+            return charNew;
         }
     }
-    return charToChange;
-}  
+}
 
 int main() { 
-
+`
     char charToUse;
 
     printf("Enter letter to change here: ");
     scanf("%c", &charToUse);
 
-    printf("%c is entered.\n", charToUse);
-
     //rotor1 forward
-    charToUse = implementRotorForward(rotor1, incrementsToRotor1, charToUse);
+    charToUse = implementRotorForward(rotor1, 0, charToUse);
     incrementsToRotor1++;
-    if (incrementsToRotor1 == 27) {
-        incrementsToRotor1 = 1;
-    }
-
+    printf("char after rotor1 forward %c\n", charToUse);
+     
     //reflector
     for (int i = 0; i < sizeof(reflector); i++) {
-        if (reflector[0] == charToUse) {
-            charToUse = reflector[1];
-        } else if (reflector[1] == charToUse) {
-            charToUse = reflector[0];
+
+        if (reflector[i][0] == charToUse) {
+            charToUse = reflector[i][1];
+            break;
+        } else if (reflector[i][1] == charToUse) {
+            charToUse = reflector[i][0];
+            break;
         }
         
-        
     }
+    printf("char after reflector %c\n", charToUse);
 
+//----working boundary----
+  
     //rotor1 backwards:
-    charToUse = implementRotorBackward(rotor1, incrementsToRotor1, charToUse);
+    charToUse = implementRotorForward(rotor1, 0, charToUse);
+    printf("char after rotor1 backward %c\n", charToUse);
 
     //output
     printf("output is:\n%c\n", charToUse);
