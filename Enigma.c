@@ -1,95 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "rotor.h"
+
 //list to be checked for all plugboard operations
 char plugboardList[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-
-char rotor1[26][2] = {
-    {'A', 'F'},
-    {'B', 'P'},
-    {'C', 'Q'},
-    {'D', 'J'},
-    {'E', 'H'},
-    {'F', 'Y'},
-    {'G', 'K'},
-    {'H', 'O'},
-    {'I', 'U'},
-    {'J', 'L'},
-    {'K', 'N'},
-    {'L', 'M'},
-    {'M', 'D'},
-    {'N', 'A'},
-    {'O', 'W'},
-    {'P', 'X'},
-    {'Q', 'G'},
-    {'R', 'S'},
-    {'S', 'Z'},
-    {'T', 'I'},
-    {'U', 'V'},
-    {'V', 'C'},
-    {'W', 'B'},
-    {'X', 'R'},
-    {'Y', 'T'},
-    {'Z', 'E'}
-};
-
-char rotor2[26][3] = {
-    {'A', 'Y'},
-    {'B', 'V'},
-    {'C', 'U'},
-    {'D', 'P'},
-    {'E', 'N'},
-    {'F', 'B'},
-    {'G', 'G'},
-    {'H', 'W'},
-    {'I', 'J'},
-    {'J', 'X'},
-    {'K', 'Z'},
-    {'L', 'K'},
-    {'M', 'R'},
-    {'N', 'I'},
-    {'O', 'A'},
-    {'P', 'O'},
-    {'Q', 'L'},
-    {'R', 'Q'},
-    {'S', 'F'},
-    {'T', 'D'},
-    {'U', 'S'},
-    {'V', 'H'},
-    {'W', 'M'},
-    {'X', 'T'},
-    {'Y', 'E'},
-    {'Z', 'C'}
-};
-
-char rotor3[26][3] = {
-    {'A', 'T'},
-    {'B', 'V'},
-    {'C', 'H'},
-    {'D', 'X'},
-    {'E', 'R'},
-    {'F', 'J'},
-    {'G', 'G'},
-    {'H', 'W'},
-    {'I', 'S'},
-    {'J', 'I'},
-    {'K', 'Y'},
-    {'L', 'K'},
-    {'M', 'A'},
-    {'N', 'L'},
-    {'O', 'B'},
-    {'P', 'C'},
-    {'Q', 'F'},
-    {'R', 'M'},
-    {'S', 'N'},
-    {'T', 'Q'},
-    {'U', 'D'},
-    {'V', 'U'},
-    {'W', 'O'},
-    {'X', 'Z'},
-    {'Y', 'E'},
-    {'Z', 'P'}
-};
 
 char reflector[13][2] = {
     {'A', 'N'},
@@ -106,10 +21,6 @@ char reflector[13][2] = {
     {'L', 'S'},
     {'M', 'O'}
 };
-
-int incrementsToRotor1 = 0;
-int incrementsToRotor2 = 0;
-int incrementsToRotor3 = 0;
 
 void configPlugboard() {
     
@@ -139,36 +50,37 @@ char implementPlugboard(char char1) {
     return(plugboardList[(int)char1 - 65]);
 }
 
-char implementRotorForward(char rotor[26][2], int increment, char charToChange) {
+char implementRotorForward(struct Rotor rotor, char charToChange) {
     
-    for (int i = 0; i < sizeof(rotor); i++) {
-        if (rotor[i][0] == charToChange) {
-            char charNew = rotor[i + increment][1];
-            return charNew;
-        }
-    }   
-}  
-
-char implementRotorBackward(char rotor[26][2], int increment, char charToChange) {
-
-    for (int i = 0; i < sizeof(rotor); i++) {
-        if (rotor[i][1] == charToChange) {  
-            char charNew = rotor[i + increment][1];
+    for (int i = 0; i < sizeof(rotor.mapping); i++) {
+        if (rotor.mapping[i][0] == charToChange) {
+            char charNew = rotor.mapping[i + rotor.rotations++][1];
             return charNew;
         }
     }
+    return '-';   
+}  
+
+char implementRotorBackward(struct Rotor rotor, char charToChange) {
+
+    for (int i = 0; i < sizeof(rotor.mapping); i++) {
+        if (rotor.mapping[i][1] == charToChange) {  
+            char charNew = rotor.mapping[i + rotor.rotations++][0];
+            return charNew;
+        }
+    }
+    return '-';
 }
 
 int main() { 
-`
+
     char charToUse;
 
     printf("Enter letter to change here: ");
     scanf("%c", &charToUse);
 
     //rotor1 forward
-    charToUse = implementRotorForward(rotor1, 0, charToUse);
-    incrementsToRotor1++;
+    charToUse = implementRotorForward(rotor1, charToUse);
     printf("char after rotor1 forward %c\n", charToUse);
      
     //reflector
@@ -188,7 +100,7 @@ int main() {
 //----working boundary----
   
     //rotor1 backwards:
-    charToUse = implementRotorForward(rotor1, 0, charToUse);
+    charToUse = implementRotorForward(rotor1, charToUse);
     printf("char after rotor1 backward %c\n", charToUse);
 
     //output
