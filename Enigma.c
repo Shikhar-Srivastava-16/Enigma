@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 //list to be checked for all plugboard operations
 char plugboardList[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
@@ -33,7 +34,7 @@ char rotor1[26][2] = {
     {'Z', 'E'}
 };
 
-char rotor2[26][3] = {
+char rotor2[26][2] = {
     {'A', 'Y'},
     {'B', 'V'},
     {'C', 'U'},
@@ -59,10 +60,9 @@ char rotor2[26][3] = {
     {'W', 'M'},
     {'X', 'T'},
     {'Y', 'E'},
-    {'Z', 'C'}
-};
+    {'Z', 'C'}};
 
-char rotor3[26][3] = {
+char rotor3[26][2] = {
     {'A', 'T'},
     {'B', 'V'},
     {'C', 'H'},
@@ -88,8 +88,7 @@ char rotor3[26][3] = {
     {'W', 'O'},
     {'X', 'Z'},
     {'Y', 'E'},
-    {'Z', 'P'}
-};
+    {'Z', 'P'}};
 
 char reflector[13][2] = {
     {'A', 'N'},
@@ -139,60 +138,124 @@ char implementPlugboard(char char1) {
     return(plugboardList[(int)char1 - 65]);
 }
 
-char implementRotorForward(char rotor[26][2], int increment, char charToChange) {
-    
-    for (int i = 0; i < sizeof(rotor); i++) {
-        if (rotor[i][0] == charToChange) {
-            char charNew = rotor[i + increment][1];
-            return charNew;
-        }
-    }   
-}  
+char implementRotorForward(char rotor[26][2], int increment, char charToChange)
+{
+    for (int i = 0; i < 26; i++)
+    {
+        char *ref = rotor[i];
+        if (ref[0] == charToChange)
+        {
+            int newRotorIndex = i + increment;
+            if (newRotorIndex > 25)
+            {
+                newRotorIndex -= 26;
+            }
+            char *refHere = rotor[newRotorIndex];
+            // printf("character here (fwd): %c : %c\n", refHere[0], refHere[1]);
 
-char implementRotorBackward(char rotor[26][2], int increment, char charToChange) {
-
-    for (int i = 0; i < sizeof(rotor); i++) {
-        if (rotor[i][1] == charToChange) {  
-            char charNew = rotor[i + increment][1];
+            char charNew = refHere[1];
             return charNew;
         }
     }
 }
 
-int main() { 
-`
-    char charToUse;
+char implementRotorBackward(char rotor[26][2], int increment, char charToChange)
+{
+    for (int i = 0; i < 26; i++)
+    {
+        char *ref = rotor[i];
+        if (ref[1] == charToChange)
+        {
+            int newRotorIndex = i - increment;
+            if (newRotorIndex < 0)
+            {
+                newRotorIndex += 26;
+            }
+            char *refHere = rotor[newRotorIndex];
+            // printf("character here (bwd): %c : %c\n", refHere[1], refHere[0]);
 
-    printf("Enter letter to change here: ");
-    scanf("%c", &charToUse);
+            char charNew = refHere[0];
+            return charNew;
+        }
+    }
+}
 
-    //rotor1 forward
-    charToUse = implementRotorForward(rotor1, 0, charToUse);
+void incrementRotors()
+{
     incrementsToRotor1++;
-    printf("char after rotor1 forward %c\n", charToUse);
-     
-    //reflector
-    for (int i = 0; i < sizeof(reflector); i++) {
+    if (incrementsToRotor1 > 26)
+    {
+        incrementsToRotor2++;
+        incrementsToRotor1 -= 26;
+        if (incrementsToRotor2 > 26)
+        {
+            incrementsToRotor3++;
+            incrementsToRotor2 -= 26;
+        }
+    }
+}
 
-        if (reflector[i][0] == charToUse) {
+char machine(char charToUse)
+{
+    // rotor1 forward
+    charToUse = implementRotorForward(rotor1, incrementsToRotor1, charToUse);
+    // printf("letter after rotor fwd: %c\n", charToUse);
+
+    // rotor2 forward
+    charToUse = implementRotorForward(rotor2, incrementsToRotor2, charToUse);
+
+    // rotor3 forward
+    charToUse = implementRotorForward(rotor3, incrementsToRotor3, charToUse);
+
+    // reflector
+    for (int i = 0; i < sizeof(reflector); i++)
+    {
+        if (reflector[i][0] == charToUse)
+        {
+            // printf("character here (ref): %c : %c\n", reflector[i][0], reflector[i][1]);
             charToUse = reflector[i][1];
             break;
-        } else if (reflector[i][1] == charToUse) {
+        }
+        else if (reflector[i][1] == charToUse)
+        {
+            // printf("character here (ref): %c : %c\n", reflector[i][1], reflector[i][0]);
             charToUse = reflector[i][0];
             break;
         }
-        
     }
-    printf("char after reflector %c\n", charToUse);
+    // printf("letter after reflector: %c\n", charToUse);
 
-//----working boundary----
-  
-    //rotor1 backwards:
-    charToUse = implementRotorForward(rotor1, 0, charToUse);
-    printf("char after rotor1 backward %c\n", charToUse);
+    // rotor3 backwards:
+    charToUse = implementRotorBackward(rotor3, incrementsToRotor3, charToUse);
 
-    //output
-    printf("output is:\n%c\n", charToUse);
+    // rotor2 backwards:
+    charToUse = implementRotorBackward(rotor2, incrementsToRotor2, charToUse);
 
-    return 0;
+    // rotor1 backwards:
+    charToUse = implementRotorBackward(rotor1, incrementsToRotor1, charToUse);
+    // printf("letter after rotor bwd: %c\n", charToUse);
+
+    // incrementing rotors
+    incrementRotors();
+    return (charToUse);
+}
+
+int main()
+{
+    char charToUse = 1;
+    // char word[] = {'A', 'L', 'A', 'N', 'T', 'U', 'R', 'I', 'N', 'G'};
+    char word[] = {'Q', 'X', 'D', 'X', 'D', 'F', 'B', 'L', 'B', 'J'};
+    // char word[] = {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'};
+    // char word[] = {'G', 'H', 'Q', 'X', 'Z', 'K', 'O', 'M', 'B', 'S'};
+
+    for (int i = 0; i < sizeof(word); i++)
+    {
+        // printf("Index: %d; Character: %c\n", i, word[i]);
+        charToUse = word[i];
+        char newChar = machine(charToUse);
+        printf("%c", newChar);
+        // printf("incrementation: %i %i %i\n", incrementsToRotor1, incrementsToRotor2, incrementsToRotor3);
+        // printf("\n\n");
+    }
+    printf("\n");
 }
