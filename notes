@@ -1,6 +1,21 @@
 20th December 2023: Enigma Machine Notes Entry 1
 Time: 0051 hrs IST
-    This is the first entry (of many, I am sure) concerning my writing a program to emulate the german-made Enigma Machine
+    This is the first entry (of many) concerning my writing a program to emulate the german-made Enigma Machine
     This first entry is written before I start and before I make the initial commit. 
     This entire project will be published on github and regularly updated. It will be written in C. 
     Each following entry will be made whenever I add to the program. It will contain references to each of the relevant commitment messages. It will also explain the working of each of the parts and how they fit into Enigma's mechanisms.
+
+25th January 2023: Enigma Machine Notes Entry 2
+Time: 1203 hrs IST
+    whoops, I finished much of the program
+
+    current problems: while most of the program works, there are two main problems:
+        1. backward rotor does not increment the second entry. no clue why at the time, but another entry will follow as soon as I can figure out why it happened. 
+        2. The incrementation does not work for last 5 elem or first 5 elem. I do know why this happens.
+        The incrementation will not work when moving forward if the letters is one of the last four - because trying to find the (n+5)th element returns null if n > 21.
+        The same works in rewverse for rotor bwd.
+
+25th January 2023: Enigma Machine Notes Entry 3 
+Time: 1315 hrs IST
+    continued from Entry 2
+    fixed problem 2 - simply an issue where to access last element of the rotor (index 25) the program was using the index

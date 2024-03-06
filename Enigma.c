@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+// #include <cstdio>
 
 //list to be checked for all plugboard operations
 char plugboardList[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
@@ -117,14 +118,12 @@ void configPlugboard() {
      * switches the desired letters' positions in plugboardList array
     */
 
-    //fully functioning
     char change1;
     char change2;
 
     printf("Enter the letter to change followed by the letter to be changed to: ");
     scanf("%c %c", &change1, &change2);
 
-    //change value of index int(var)
     plugboardList[(int)change1 - 65] = change2;
     plugboardList[(int)change2 - 65] = change1;     
 }
@@ -151,7 +150,6 @@ char implementRotorForward(char rotor[26][2], int increment, char charToChange)
                 newRotorIndex -= 26;
             }
             char *refHere = rotor[newRotorIndex];
-            // printf("character here (fwd): %c : %c\n", refHere[0], refHere[1]);
 
             char charNew = refHere[1];
             return charNew;
@@ -172,7 +170,6 @@ char implementRotorBackward(char rotor[26][2], int increment, char charToChange)
                 newRotorIndex += 26;
             }
             char *refHere = rotor[newRotorIndex];
-            // printf("character here (bwd): %c : %c\n", refHere[1], refHere[0]);
 
             char charNew = refHere[0];
             return charNew;
@@ -199,11 +196,8 @@ char machine(char charToUse)
 {
     // rotor1 forward
     charToUse = implementRotorForward(rotor1, incrementsToRotor1, charToUse);
-    // printf("letter after rotor fwd: %c\n", charToUse);
-
     // rotor2 forward
     charToUse = implementRotorForward(rotor2, incrementsToRotor2, charToUse);
-
     // rotor3 forward
     charToUse = implementRotorForward(rotor3, incrementsToRotor3, charToUse);
 
@@ -212,28 +206,22 @@ char machine(char charToUse)
     {
         if (reflector[i][0] == charToUse)
         {
-            // printf("character here (ref): %c : %c\n", reflector[i][0], reflector[i][1]);
             charToUse = reflector[i][1];
             break;
         }
         else if (reflector[i][1] == charToUse)
         {
-            // printf("character here (ref): %c : %c\n", reflector[i][1], reflector[i][0]);
             charToUse = reflector[i][0];
             break;
         }
     }
-    // printf("letter after reflector: %c\n", charToUse);
 
     // rotor3 backwards:
     charToUse = implementRotorBackward(rotor3, incrementsToRotor3, charToUse);
-
     // rotor2 backwards:
     charToUse = implementRotorBackward(rotor2, incrementsToRotor2, charToUse);
-
     // rotor1 backwards:
     charToUse = implementRotorBackward(rotor1, incrementsToRotor1, charToUse);
-    // printf("letter after rotor bwd: %c\n", charToUse);
 
     // incrementing rotors
     incrementRotors();
@@ -242,20 +230,25 @@ char machine(char charToUse)
 
 int main()
 {
-    char charToUse = 1;
-    // char word[] = {'A', 'L', 'A', 'N', 'T', 'U', 'R', 'I', 'N', 'G'};
-    char word[] = {'Q', 'X', 'D', 'X', 'D', 'F', 'B', 'L', 'B', 'J'};
-    // char word[] = {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'};
-    // char word[] = {'G', 'H', 'Q', 'X', 'Z', 'K', 'O', 'M', 'B', 'S'};
-
-    for (int i = 0; i < sizeof(word); i++)
+    char charToUse = 0;
+    printf("Enter Line: ");
+    char *word;
+    size_t len = 0;
+    len = getline(&word, &len, stdin);
+    printf("Output: ");
+    for (int i = 0; i < len - 1; i++)
     {
-        // printf("Index: %d; Character: %c\n", i, word[i]);
-        charToUse = word[i];
-        char newChar = machine(charToUse);
-        printf("%c", newChar);
-        // printf("incrementation: %i %i %i\n", incrementsToRotor1, incrementsToRotor2, incrementsToRotor3);
-        // printf("\n\n");
+        charToUse = toupper(word[i]);
+
+        if (charToUse == ' ')
+        {
+            printf("%c", charToUse);
+        }
+        else
+        {
+            char newChar = machine(charToUse);
+            printf("%c", newChar);
+        }
     }
     printf("\n");
 }
